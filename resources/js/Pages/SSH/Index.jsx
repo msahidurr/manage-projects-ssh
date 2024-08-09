@@ -8,10 +8,10 @@ import InputLabel from '@/Components/InputLabel';
 export default function Index({ auth, ssh, status = '' }) {
 
     const { data, setData, post, processing, errors } = useForm({
-        host: ssh?.host,
-        port: ssh?.port,
-        username: ssh?.username,
-        password: ssh?.password,
+        host: ssh?.host ?? '',
+        port: ssh?.port ?? '',
+        username: ssh?.username ?? '',
+        password: ssh?.password ?? '',
     });
 
     const submit = (e) => {
@@ -101,7 +101,7 @@ export default function Index({ auth, ssh, status = '' }) {
                                     <InputLabel htmlFor="password" value="Password" />
                                     <TextInput
                                         id="password"
-                                        type="text"
+                                        type="password"
                                         name="password"
                                         value={data.password}
                                         className="form-control"
