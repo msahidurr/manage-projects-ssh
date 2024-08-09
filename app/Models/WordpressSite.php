@@ -29,15 +29,14 @@ class WordpressSite extends Model
 
     public function checkWpSiteUpdates()
     {
-        $sshData = Auth::user()->ssh;
-
-        if($sshData) {
-            
-            // $ssh = new SSHService($sshData->host, $sshData->username, $sshData->password);
-            
-            // return $ssh->exec("cd /{$this->path}; ". self::WP_UPDATE_SH);
+        try {
+            $sshData = Auth::user()->ssh;
+            if($sshData) {
+                $ssh = new SSHService($sshData->host, $sshData->username, $sshData->password);            
+                return $ssh->exec("cd /{$this->path}; ". self::WP_UPDATE_SH);
+            }
+        } catch (\Throwable $th) {
+            return '';
         }
-
-        return '';
     }
 }
