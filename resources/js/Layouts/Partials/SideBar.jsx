@@ -18,6 +18,13 @@ export default function SideBar() {
                             <p>Wordpress Sites</p>
                         </Link>
                     </li>
+
+                    <li className="nav-item">
+                        <Link href={ route('nginx-logs.index') } className="nav-link">
+                            <i className="nav-icon fas fa-th"></i>
+                            <p>Nginx Logs</p>
+                        </Link>
+                    </li>
                 </ul>
             </nav>
         </div>

@@ -29,7 +29,7 @@ class WordpressSite extends Model
 
     public function checkWpSiteUpdates()
     {
-        $sshData = Auth::user()->ssh()->first();
+        $sshData = Auth::user()->ssh;
 
         if($sshData) {
             

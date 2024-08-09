@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\WordpressSiteController;
 use App\Http\Controllers\ConnectSSHController;
+use App\Http\Controllers\NginxLogController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,6 +22,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/connect-ssh', [ConnectSSHController::class, 'store'])->name('ssh.connection');
     Route::resource('wordpress-sites', WordpressSiteController::class);
     Route::get('update-wp-core/{id}', [WordpressSiteController::class, 'updateWpCore'])->name('update-wp-core');
+
+    Route::get('nginx-logs', [NginxLogController::class, 'index'])->name('nginx-logs.index');
+    Route::get('nginx-logs/show', [NginxLogController::class, 'show'])->name('nginx-logs.show');
 });
 
 require __DIR__.'/auth.php';
