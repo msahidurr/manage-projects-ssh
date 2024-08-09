@@ -58,10 +58,10 @@ class ConnectSSHController extends Controller
     {
         $ssh = new SSHService($validated['host'], $validated['username'], $validated['password']);
 
-        // $output = $ssh->exec('ls'); // example command
+        // $ssh->exec('cd /var/www');
 
         print_r('<pre>');
-        echo $ssh->exec('ls -latr');die();
+        echo $ssh->exec('cd /var/www; ls -latr');die();
 
         // print_r('<pre>');
         // print_r($output);die();

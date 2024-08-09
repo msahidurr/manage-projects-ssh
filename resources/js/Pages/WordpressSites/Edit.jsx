@@ -72,6 +72,7 @@ export default function Dashboard({ auth, site }) {
                                         value={data.path}
                                         className="form-control"
                                         isFocused={true}
+                                        placeholder="var/www/project_directory"
                                         onChange={(e) => setData('path', e.target.value)}
                                     />
 

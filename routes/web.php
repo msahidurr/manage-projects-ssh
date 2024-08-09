@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/connect-ssh', [ConnectSSHController::class, 'index'])->name('ssh.connection');
     Route::post('/connect-ssh', [ConnectSSHController::class, 'store'])->name('ssh.connection');
     Route::resource('wordpress-sites', WordpressSiteController::class);
+    Route::get('update-wp-core/{id}', [WordpressSiteController::class, 'updateWpCore'])->name('update-wp-core');
 });
 
 require __DIR__.'/auth.php';

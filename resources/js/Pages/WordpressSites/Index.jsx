@@ -55,7 +55,9 @@ export default function Index({ auth, sites, status }) {
                                             <td>{site_name}</td>
                                             <td>{path}</td>
                                             <td>
-                                                <Link href={`/wordpress-sites/${id}/edit`} className='btn btn-success'>Edit</Link>
+                                                <Link href={route('wordpress-sites.edit', id)} className='btn btn-success'>Edit</Link>
+
+                                                <Link href={route('update-wp-core', id)} className='btn btn-primary ml-2'>Update wp</Link>
                                             </td>
                                         </tr>
                                     ))}

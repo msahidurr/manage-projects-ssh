@@ -14,7 +14,14 @@ class WordpressSiteController extends Controller
 {
     public function index(Request $request): Response
     {
-        $sites = WordpressSite::where('user_id', $request->user()->id)->paginate();
+        $sitesItems = WordpressSite::where('user_id', $request->user()->id)->paginate();
+
+        $mappedItems = $sitesItems->getCollection()->map(function ($item) {
+            $item->update_available = !!$item->checkWpSiteUpdates();
+            return $item;
+        });
+
+        $sites = $sitesItems->setCollection($mappedItems);
 
         return Inertia::render('WordpressSites/Index', [
             'sites' => $sites,
@@ -34,9 +41,12 @@ class WordpressSiteController extends Controller
             'path' => 'required|string',
         ]);
 
-        $validated['user_id'] = $request->user()->id;
-
-        WordpressSite::create($validated);
+        
+        $wordpressSite = new WordpressSite();
+        $wordpressSite->user_id = $request->user()->id;
+        $wordpressSite->path = $validated['path'];
+        $wordpressSite->site_name = $validated['site_name'];
+        $wordpressSite->save();
 
         return Redirect::route('wordpress-sites.index')->withStatus('Successfully created.');
     }
@@ -58,8 +68,9 @@ class WordpressSiteController extends Controller
         try {
             $userId = Auth::user()->id;
             $wordpressSite = WordpressSite::where('user_id', $userId)->findOrFail($id);
-
-            $wordpressSite->update($validated);
+            $wordpressSite->path = $validated['path'];
+            $wordpressSite->site_name = $validated['site_name'];
+            $wordpressSite->save();
             return Redirect::route('wordpress-sites.index')->withStatus('Successfully updated.');
         } catch (\Throwable $th) {
             return Redirect::route('wordpress-sites.index')->withStatus('Failed');
@@ -74,6 +85,19 @@ class WordpressSiteController extends Controller
 
             $wordpressSite->delete();
             return Redirect::route('wordpress-sites.index')->withStatus('Successfully deleted');
+        } catch (\Throwable $th) {
+            return Redirect::route('wordpress-sites.index')->withStatus('Failed');
+        }
+    }
+
+    public function updateWpCore($id): RedirectResponse
+    {
+        try {
+            $userId = Auth::user()->id;
+            $wordpressSite = WordpressSite::where('user_id', $userId)->findOrFail($id);
+            $wordpressSite->checkWpSiteUpdates();
+
+            return Redirect::route('wordpress-sites.index')->withStatus('Successfully updated wordpress');
         } catch (\Throwable $th) {
             return Redirect::route('wordpress-sites.index')->withStatus('Failed');
         }
