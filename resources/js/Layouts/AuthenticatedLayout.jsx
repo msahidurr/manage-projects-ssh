@@ -11,7 +11,7 @@ export default function Authenticated({ user, children }) {
                 <Navbar user={user}></Navbar>
 
                 <aside className="main-sidebar sidebar-dark-primary elevation-4">
-                    <Link href="index3.html" className="brand-link">
+                    <Link href="/" className="brand-link">
                         <span className="brand-text font-weight-light">{ appName }</span>
                     </Link>
 

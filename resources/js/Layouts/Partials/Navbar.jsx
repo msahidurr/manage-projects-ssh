@@ -10,8 +10,7 @@ export default function Navbar({user}) {
                     </a>
                     <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <div className='dropdown-item'>
-
-                        <Link method="post" href={route('logout')}> Log Out </Link>
+                            <Link method="post" href={route('logout')} as="button"> Log Out </Link>
                         </div>
                     </div>
                 </li>

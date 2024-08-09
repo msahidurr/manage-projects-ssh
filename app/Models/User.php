@@ -44,4 +44,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function ssh()
+    {
+        return $this->hasOne(Ssh::class);
+    }
 }
