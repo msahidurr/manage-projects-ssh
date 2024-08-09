@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WordpressSiteController;
 use App\Http\Controllers\ConnectSSHController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/connect-ssh', [ConnectSSHController::class, 'index'])->name('ssh.connection');
     Route::post('/connect-ssh', [ConnectSSHController::class, 'store'])->name('ssh.connection');
+    Route::resource('wordpress-sites', WordpressSiteController::class);
 });
 
 require __DIR__.'/auth.php';

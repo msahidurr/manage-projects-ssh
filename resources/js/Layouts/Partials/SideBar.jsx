@@ -8,9 +8,14 @@ export default function SideBar() {
                     <li className="nav-item">
                         <Link href={ route('ssh.connection') } className="nav-link">
                             <i className="nav-icon fas fa-th"></i>
-                            <p>
-                                Connect Server
-                            </p>
+                            <p> Connect Server </p>
+                        </Link>
+                    </li>
+
+                    <li className="nav-item">
+                        <Link href={ route('wordpress-sites.index') } className="nav-link">
+                            <i className="nav-icon fas fa-th"></i>
+                            <p>Wordpress Sites</p>
                         </Link>
                     </li>
                 </ul>
