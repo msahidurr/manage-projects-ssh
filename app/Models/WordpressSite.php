@@ -33,9 +33,9 @@ class WordpressSite extends Model
 
         if($sshData) {
             
-            $ssh = new SSHService($sshData->host, $sshData->username, $sshData->password);
+            // $ssh = new SSHService($sshData->host, $sshData->username, $sshData->password);
             
-            return $ssh->exec("cd /{$this->path}; ". self::WP_UPDATE_SH);
+            // return $ssh->exec("cd /{$this->path}; ". self::WP_UPDATE_SH);
         }
 
         return '';

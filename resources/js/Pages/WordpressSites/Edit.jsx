@@ -20,20 +20,20 @@ export default function Dashboard({ auth, site }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Update Wordpress Site</h2>}
         >
-            <Head title="Dashboard" />
+            <Head title="Update Wordpress Site" />
 
             <div className="content-header">
                 <div className="container-fluid">
                     <div className="row mb-2">
                         <div className="col-sm-6">
-                            <h1 className="m-0">Dashboard</h1>
+                            <h1 className="m-0">Update Wordpress Site</h1>
                         </div>
                         <div className="col-sm-6">
                             <ol className="breadcrumb float-sm-right">
                                 <li className="breadcrumb-item"><a href="#">Home</a></li>
-                                <li className="breadcrumb-item active">Dashboard</li>
+                                <li className="breadcrumb-item active">Update Wordpress Site</li>
                             </ol>
                         </div>
                     </div>
@@ -44,7 +44,7 @@ export default function Dashboard({ auth, site }) {
                 <div className='col-md-8 offset-md-2'>
                     <div className="card card-primary">
                         <div className="card-header">
-                            <h3 className="card-title">Create Wordpress Site</h3>
+                            <h3 className="card-title">Update Wordpress Site</h3>
                         </div>
                         <form onSubmit={submit}>
                             <div className="card-body">

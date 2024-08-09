@@ -9,6 +9,7 @@ use Inertia\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use App\Services\SSHService;
 
 class WordpressSiteController extends Controller
 {
@@ -41,14 +42,21 @@ class WordpressSiteController extends Controller
             'path' => 'required|string',
         ]);
 
-        
-        $wordpressSite = new WordpressSite();
-        $wordpressSite->user_id = $request->user()->id;
-        $wordpressSite->path = $validated['path'];
-        $wordpressSite->site_name = $validated['site_name'];
-        $wordpressSite->save();
+        try {
+            $wordpressSite = new WordpressSite();
+            $wordpressSite->user_id = $request->user()->id;
+            $wordpressSite->path = $validated['path'];
+            $wordpressSite->site_name = $validated['site_name'];
+            $wordpressSite->save();
 
-        return Redirect::route('wordpress-sites.index')->withStatus('Successfully created.');
+            $ssh = new SSHService($validated['host'], $validated['username'], $validated['password']);
+            
+            $ssh->createPath($validated['path']);
+            
+            return Redirect::route('wordpress-sites.index')->withStatus('Successfully created.');
+        } catch (\Throwable $th) {
+            return Redirect::route('wordpress-sites.index')->withStatus($th->getMessage());
+        }
     }
 
     public function edit($id)
@@ -68,12 +76,21 @@ class WordpressSiteController extends Controller
         try {
             $userId = Auth::user()->id;
             $wordpressSite = WordpressSite::where('user_id', $userId)->findOrFail($id);
-            $wordpressSite->path = $validated['path'];
+
+            $oldPath = $wordpressSite->path;
+            $newPath = $validated['path'];
+
+            $wordpressSite->path = $newPath;
             $wordpressSite->site_name = $validated['site_name'];
             $wordpressSite->save();
+
+            $ssh = new SSHService($validated['host'], $validated['username'], $validated['password']);
+            
+            $ssh->renamePath($oldPath, $newPath);
+
             return Redirect::route('wordpress-sites.index')->withStatus('Successfully updated.');
         } catch (\Throwable $th) {
-            return Redirect::route('wordpress-sites.index')->withStatus('Failed');
+            return Redirect::route('wordpress-sites.index')->withStatus($th->getMessage());
         }
     }
 
@@ -86,7 +103,7 @@ class WordpressSiteController extends Controller
             $wordpressSite->delete();
             return Redirect::route('wordpress-sites.index')->withStatus('Successfully deleted');
         } catch (\Throwable $th) {
-            return Redirect::route('wordpress-sites.index')->withStatus('Failed');
+            return Redirect::route('wordpress-sites.index')->withStatus($th->getMessage());
         }
     }
 
@@ -99,7 +116,7 @@ class WordpressSiteController extends Controller
 
             return Redirect::route('wordpress-sites.index')->withStatus('Successfully updated wordpress');
         } catch (\Throwable $th) {
-            return Redirect::route('wordpress-sites.index')->withStatus('Failed');
+            return Redirect::route('wordpress-sites.index')->withStatus($th->getMessage());
         }
     }
 }

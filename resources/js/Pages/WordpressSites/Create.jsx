@@ -64,7 +64,7 @@ export default function Dashboard({ auth }) {
                                 </div>
 
                                 <div className="form-group">
-                                    <InputLabel htmlFor="path" value="Path" />
+                                    <InputLabel htmlFor="path" value="Path (full directory)" />
                                     <TextInput
                                         id="path"
                                         type="text"
