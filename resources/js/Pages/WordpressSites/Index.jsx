@@ -61,9 +61,9 @@ export default function Index({ auth, sites, status }) {
                                             </td>
                                         </tr>
                                     ))}
-                                    {sites.length && (
+                                    {sites.data.length <= 0 && (
                                         <tr>
-                                            <td colSpan='3' className='text-center'> no data found.</td>
+                                            <td colSpan='4' className='text-center'> no data found.</td>
                                         </tr>
                                     )}
                                 </tbody>
