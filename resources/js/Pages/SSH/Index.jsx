@@ -51,7 +51,7 @@ export default function Index({ auth, ssh, status = '' }) {
                         </div>
                         <form onSubmit={submit}>
                             <div className="card-body">
-                            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+                            {status && <div className="alert alert-success">{status}</div>}
                                 <div className="form-group">
                                     <InputLabel htmlFor="host" value="Host" />
                                     <TextInput

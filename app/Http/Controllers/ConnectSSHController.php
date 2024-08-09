@@ -48,7 +48,11 @@ class ConnectSSHController extends Controller
 
             $output = $this->connect($validated);
 
-            return Redirect::route('ssh.connection')->withStatus($output);
+            if(!empty($output)) {
+                return Redirect::route('ssh.connection')->withStatus('Connected');
+            }
+            return Redirect::route('ssh.connection')->withStatus('Failed to connect');
+
         } catch (\Throwable $th) {
             return Redirect::route('ssh.connection')->withStatus($th->getMessage());
         }
@@ -58,13 +62,8 @@ class ConnectSSHController extends Controller
     {
         $ssh = new SSHService($validated['host'], $validated['username'], $validated['password']);
 
-        // $ssh->exec('cd /var/www');
+        $output = $ssh->exec('ls -latr');
 
-        print_r('<pre>');
-        echo $ssh->exec('cd /var/www; ls -latr');die();
-
-        // print_r('<pre>');
-        // print_r($output);die();
-        // return $output;
+        return $output;
     }
 }
