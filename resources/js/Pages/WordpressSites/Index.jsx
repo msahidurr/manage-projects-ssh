@@ -31,11 +31,7 @@ export default function Index({ auth, sites, status }) {
                 <div className="col-12">
                     <Link href="/wordpress-sites/create" as='button' className='btn btn-primary mb-3'>Add New Site</Link>
 
-                    {status &&
-                        <div class="alert alert-success" role="alert">
-                            {status}
-                        </div>
-                    }
+                    {status && <div class="alert alert-success" role="alert">{status}</div>}
 
                     <div className="card">
                         <div className="card-body table-responsive p-0">
