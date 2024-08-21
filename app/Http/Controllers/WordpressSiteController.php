@@ -49,9 +49,12 @@ class WordpressSiteController extends Controller
             $wordpressSite->site_name = $validated['site_name'];
             $wordpressSite->save();
 
-            $ssh = new SSHService($validated['host'], $validated['username'], $validated['password']);
-            
-            $ssh->createPath($validated['path']);
+            $sshData = Auth::user()->ssh;
+
+            if($sshData) {
+                $ssh = new SSHService($sshData['host'], $sshData['username'], $sshData['password']);
+                 $ssh->createPath($validated['path']);
+            }
             
             return Redirect::route('wordpress-sites.index')->withStatus('Successfully created.');
         } catch (\Throwable $th) {
@@ -84,9 +87,12 @@ class WordpressSiteController extends Controller
             $wordpressSite->site_name = $validated['site_name'];
             $wordpressSite->save();
 
-            $ssh = new SSHService($validated['host'], $validated['username'], $validated['password']);
-            
-            $ssh->renamePath($oldPath, $newPath);
+            $sshData = Auth::user()->ssh;
+
+            if($sshData) {
+                $ssh = new SSHService($sshData['host'], $sshData['username'], $sshData['password']);
+                 $ssh->renamePath($oldPath, $newPath);
+            }
 
             return Redirect::route('wordpress-sites.index')->withStatus('Successfully updated.');
         } catch (\Throwable $th) {
